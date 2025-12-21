@@ -9,16 +9,25 @@ import { homedir } from "os";
 import { join } from "path";
 import { existsSync } from "fs";
 
-// Load .env from user home directory
-const envPath = join(homedir(), '.env');
-if (existsSync(envPath)) {
-  const envContent = await Bun.file(envPath).text();
-  envContent.split('\n').forEach(line => {
-    const [key, value] = line.split('=');
-    if (key && value && !key.startsWith('#')) {
-      process.env[key.trim()] = value.trim();
-    }
-  });
+// Load .env from PAI_DIR or user home directory
+const paiDir = process.env.PAI_DIR || join(homedir(), '.claude');
+const envPaths = [
+  join(paiDir, '.env'),           // PAI_DIR/.env (preferred)
+  join(homedir(), '.env'),        // ~/.env (fallback)
+];
+
+for (const envPath of envPaths) {
+  if (existsSync(envPath)) {
+    const envContent = await Bun.file(envPath).text();
+    envContent.split('\n').forEach(line => {
+      const [key, value] = line.split('=');
+      if (key && value && !key.startsWith('#')) {
+        process.env[key.trim()] = value.trim();
+      }
+    });
+    console.log(`📁 Loaded env from: ${envPath}`);
+    break;
+  }
 }
 
 const PORT = parseInt(process.env.PORT || "8888");
@@ -103,7 +112,11 @@ async function generateSpeech(text: string, voiceId: string): Promise<ArrayBuffe
   return await response.arrayBuffer();
 }
 
-// Play audio using afplay (macOS)
+// Detect OS and audio player
+const IS_LINUX = process.platform === 'linux';
+const IS_MACOS = process.platform === 'darwin';
+
+// Play audio using platform-appropriate player
 async function playAudio(audioBuffer: ArrayBuffer): Promise<void> {
   const tempFile = `/tmp/voice-${Date.now()}.mp3`;
 
@@ -111,7 +124,18 @@ async function playAudio(audioBuffer: ArrayBuffer): Promise<void> {
   await Bun.write(tempFile, audioBuffer);
 
   return new Promise((resolve, reject) => {
-    const proc = spawn('/usr/bin/afplay', [tempFile]);
+    let proc;
+
+    if (IS_LINUX) {
+      // Linux: use mpv (no video, minimal output)
+      proc = spawn('/usr/bin/mpv', ['--no-video', '--no-terminal', tempFile]);
+    } else if (IS_MACOS) {
+      // macOS: use afplay
+      proc = spawn('/usr/bin/afplay', [tempFile]);
+    } else {
+      reject(new Error(`Unsupported platform: ${process.platform}`));
+      return;
+    }
 
     proc.on('error', (error) => {
       console.error('Error playing audio:', error);
@@ -125,7 +149,7 @@ async function playAudio(audioBuffer: ArrayBuffer): Promise<void> {
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error(`afplay exited with code ${code}`));
+        reject(new Error(`Audio player exited with code ${code}`));
       }
     });
   });
@@ -187,10 +211,16 @@ async function sendNotification(
     }
   }
 
-  // Display macOS notification
+  // Display desktop notification
   try {
-    const script = `display notification "${safeMessage}" with title "${safeTitle}" sound name ""`;
-    await spawnSafe('/usr/bin/osascript', ['-e', script]);
+    if (IS_LINUX) {
+      // Linux: use notify-send
+      await spawnSafe('/usr/bin/notify-send', [safeTitle, safeMessage]);
+    } else if (IS_MACOS) {
+      // macOS: use osascript
+      const script = `display notification "${safeMessage}" with title "${safeTitle}" sound name ""`;
+      await spawnSafe('/usr/bin/osascript', ['-e', script]);
+    }
   } catch (error) {
     console.error("Notification display error:", error);
   }

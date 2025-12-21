@@ -149,7 +149,7 @@ Skill Response:
 ---
 
 **Related Documentation:**
-- `${PAI_DIR}/skills/CORE/SKILL-STRUCTURE-AND-ROUTING.md` - Canonical structure guide
+- `${PAI_DIR}/skills/CORE/SkillSystem.md` - Canonical structure guide
 - `${PAI_DIR}/skills/CORE/CONSTITUTION.md` - Overall Kai philosophy
 
 **Last Updated:** 2025-11-23

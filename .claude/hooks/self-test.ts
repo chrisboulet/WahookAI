@@ -26,7 +26,7 @@ const PAI_DIR = join(REPO_ROOT, '.claude');
 const HOOKS_DIR = join(PAI_DIR, 'hooks');
 const SKILLS_DIR = join(PAI_DIR, 'skills');
 const AGENTS_DIR = join(PAI_DIR, 'agents');
-const HISTORY_DIR = join(PAI_DIR, 'history');
+const HISTORY_DIR = join(PAI_DIR, 'History');
 
 interface TestResult {
   name: string;

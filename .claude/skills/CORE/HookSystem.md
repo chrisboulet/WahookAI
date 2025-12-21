@@ -1033,7 +1033,7 @@ Hooks in same event execute **sequentially** in order defined in settings.json:
 - **Voice System:** `${PAI_DIR}/voice-server/USAGE.md`
 - **Agent Architecture:** `${PAI_DIR}/skills/CORE/agent-protocols.md`
 - **History/UOCS:** `${PAI_DIR}/skills/CORE/history-system.md`
-- **Observability Dashboard:** `${PAI_DIR}/skills/system-observability/`
+- **Observability Dashboard:** `${PAI_DIR}/skills/Observability/`
 
 ---
 

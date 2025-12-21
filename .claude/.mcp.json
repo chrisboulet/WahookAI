@@ -1,39 +1,5 @@
 {
   "mcpServers": {
-    "httpx": {
-      "type": "http",
-      "description": "Use for getting information on web servers or site stack information, like what tech stack a given website is running, and other similar use cases.",
-      "url": "https://httpx-mcp.danielmiessler.workers.dev",
-      "headers": {
-        "x-api-key": "REDACTED"
-      }
-    },
-    "content": {
-      "type": "http",
-      "description": "Figuring out any of my (Daniel Miessler's) opinions or blog posts or writing online. This is basically an archive of all my content.",
-      "url": "https://content-mcp.danielmiessler.workers.dev"
-    },
-    "daemon": {
-      "type": "http",
-      "description": "My personal API for everything in my (Daniel Miessler's) life.",
-      "url": "https://mcp.daemon.danielmiessler.com"
-    },
-    "Foundry": {
-      "type": "http",
-      "description": "My personal AI infrastructure (PAI), which is where you should look for any tool where I ask you to do a task that you're not sure how to do. Start by checking here to see if there's a tool for it.",
-      "url": "https://api.danielmiessler.com/mcp/",
-      "headers": {
-        "Authorization": "REDACTED"
-      }
-    },
-    "naabu": {
-      "type": "http",
-      "description": "This is a port scanner for finding open ports or services on hosts.",
-      "url": "https://naabu-mcp.danielmiessler.workers.dev",
-      "headers": {
-        "x-api-key": "REDACTED"
-      }
-    },
     "brightdata": {
       "command": "bunx",
       "args": [
@@ -41,8 +7,9 @@
         "@brightdata/mcp"
       ],
       "env": {
-        "API_TOKEN": "REDACTED"
-      }
+        "API_TOKEN": "${BRIGHTDATA_API_KEY}"
+      },
+      "description": "Web scraping with CAPTCHA bypass via BrightData"
     },
     "stripe": {
       "command": "bunx",
@@ -66,7 +33,7 @@
         "@apify/actors-mcp-server"
       ],
       "env": {
-        "APIFY_TOKEN": "REDACTED"
+        "APIFY_TOKEN": "${APIFY_TOKEN}"
       },
       "description": "Web scraping and automation tools via Apify platform"
     },

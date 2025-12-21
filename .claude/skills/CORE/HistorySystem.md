@@ -1,6 +1,6 @@
 # Universal Output Capture System (UOCS) - History System Documentation
 
-**Location:** `${PAI_DIR}/History/`
+**Location:** `${PAI_DIR}/history/`
 **Purpose:** Automated documentation of ALL work performed by PAI and specialized agents
 **Status:** ✅ FULLY OPERATIONAL
 
@@ -23,7 +23,7 @@ This file is the **complete reference** for the history system. All specificatio
 ## Directory Structure
 
 ```
-${PAI_DIR}/History/
+${PAI_DIR}/history/
 ├── Sessions/YYYY-MM/          # Session summaries (SessionEnd hook)
 ├── Learnings/YYYY-MM/         # Problem-solving narratives (Stop hook + manual)
 ├── Research/YYYY-MM/          # Investigation reports (Researcher agents)
@@ -259,7 +259,7 @@ keywords:
 /trace-feature T1
 
 # What decisions were made about this?
-ls ${PAI_DIR}/History/Decisions/*/[project]_*
+ls ${PAI_DIR}/history/Decisions/*/[project]_*
 
 # What did we learn about this domain?
 /search-history [domain-term]
@@ -286,13 +286,13 @@ ls ${PAI_DIR}/History/Decisions/*/[project]_*
 
 ```bash
 # What did we accomplish this week?
-ls -lt ${PAI_DIR}/History/Sessions/2025-10/ | head -7
+ls -lt ${PAI_DIR}/history/Sessions/2025-10/ | head -7
 
 # All decisions made this month
-ls ${PAI_DIR}/History/Decisions/2025-10/
+ls ${PAI_DIR}/history/Decisions/2025-10/
 
 # Learnings from this quarter
-ls ${PAI_DIR}/History/Learnings/2025-{10,11,12}/
+ls ${PAI_DIR}/history/Learnings/2025-{10,11,12}/
 ```
 
 ---
@@ -301,12 +301,12 @@ ls ${PAI_DIR}/History/Learnings/2025-{10,11,12}/
 
 ### Find all features for project
 ```bash
-find ${PAI_DIR}/History/Execution/Features -name "*_dashboard_*"
+find ${PAI_DIR}/history/Execution/Features -name "*_dashboard_*"
 ```
 
 ### Find bugs introduced in specific task
 ```bash
-rg "bug_introduced_by: T1.2" ${PAI_DIR}/History/Execution/Bugs/
+rg "bug_introduced_by: T1.2" ${PAI_DIR}/history/Execution/Bugs/
 ```
 
 ### Find all work from specific date
@@ -316,13 +316,13 @@ find ${PAI_DIR}/History -name "2025-10-13-*"
 
 ### Analyze tool usage patterns
 ```bash
-cat ${PAI_DIR}/History/Raw-Outputs/2025-10/*.jsonl | \
+cat ${PAI_DIR}/history/Raw-Outputs/2025-10/*.jsonl | \
   jq -r '.tool' | sort | uniq -c | sort -rn
 ```
 
 ### Extract all architectural decisions
 ```bash
-find ${PAI_DIR}/History/Decisions -name "*.md" | \
+find ${PAI_DIR}/history/Decisions -name "*.md" | \
   xargs grep -l "Alternatives considered"
 ```
 

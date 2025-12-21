@@ -66,3 +66,19 @@ credentials/
 .claude/pai_updates/
 .claude/pai_backups/
 .claude/.pai-sync-history
+
+# PAI Sensitive & Transient Files
+.claude/.credentials.json
+.claude/agent-sessions.json
+.claude/stats-cache.json
+.claude/history.jsonl
+.claude/debug/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/file-history/
+
+# PAI Raw Outputs & Project Logs (may contain secrets)
+.claude/history/raw-outputs/
+.claude/History/raw-outputs/
+.claude/projects/
+.claude/todos/
