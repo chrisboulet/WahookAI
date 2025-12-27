@@ -62,6 +62,20 @@ Read ~/UltraCTO-OS/CLAUDE.md
 python ~/UltraCTO-OS/scripts/datetime_utils.py summary
 ```
 
+Pour génération de livrables, charger aussi:
+```bash
+Read ~/UltraCTO-OS/kb/branding-kit.md
+```
+
+## Knowledge Base
+
+| Fichier | Contenu |
+|---------|---------|
+| `~/UltraCTO-OS/kb/branding-kit.md` | Couleurs, typo, messaging, forfaits, case studies |
+| `~/UltraCTO-OS/kb/4l-framework.md` | Framework décisionnel 4L |
+| `~/UltraCTO-OS/kb/lean-gpt-business.md` | Principes lean business |
+| `~/UltraCTO-OS/templates/fr/` | Templates livrables français |
+
 ## Core Principles
 
 ### ADHD Rules (TOUJOURS ACTIVES)
