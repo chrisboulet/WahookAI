@@ -27,6 +27,7 @@ description: Mode Fractional CTO pour Boulet Stratégies TI. USE WHEN user menti
 | **Planning** | "/plan day", "/plan audit", "matin", "routine" | `workflows/Planning.md` |
 | **Crm** | "/crm", "prospect", "client", "pipeline", "revenue" | `workflows/Crm.md` |
 | **Deliverables** | "/generate", "roadmap", "ADR", "rapport", "proposal" | `workflows/Deliverables.md` |
+| **LinkedInAnalysis** | "/linkedin", "analyse posts", "performance linkedin", "évolution contenu" | `workflows/LinkedInAnalysis.md` |
 
 ## Examples
 
@@ -52,6 +53,24 @@ User: "/crm pipeline"
 → Invokes Crm workflow
 → Query Supabase prospects
 → Affiche Kanban + forecast pondéré
+```
+
+**Example 4: Analyser ses posts LinkedIn**
+```
+User: "/linkedin analyse" + [screenshots]
+→ Invokes LinkedInAnalysis workflow
+→ Extrait métriques via vision
+→ Score chaque post /10
+→ Génère rapport + recommandations
+→ Met à jour tracking historique
+```
+
+**Example 5: Voir son évolution LinkedIn**
+```
+User: "/linkedin evolution"
+→ Invokes LinkedInAnalysis workflow
+→ Lit historique posts.md
+→ Affiche tendances, top posts, patterns
 ```
 
 ## Context Loading
