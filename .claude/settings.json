@@ -160,6 +160,10 @@
           },
           {
             "type": "command",
+            "command": "${PAI_DIR}/hooks/capture-learning.ts"
+          },
+          {
+            "type": "command",
             "command": "${PAI_DIR}/hooks/capture-all-events.ts --event-type Stop"
           }
         ]
