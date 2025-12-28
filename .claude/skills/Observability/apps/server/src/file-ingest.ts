@@ -35,7 +35,7 @@ const sessionTodos = new Map<string, any[]>();
  * Get the path to today's all-events file
  */
 function getTodayEventsFile(): string {
-  const paiDir = join(homedir(), '.claude');
+  const paiDir = process.env.PAI_DIR || join(homedir(), '.claude');
   const now = new Date();
   // Convert to PST
   const pstDate = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
@@ -43,7 +43,7 @@ function getTodayEventsFile(): string {
   const month = String(pstDate.getMonth() + 1).padStart(2, '0');
   const day = String(pstDate.getDate()).padStart(2, '0');
 
-  const monthDir = join(paiDir, 'History', 'raw-outputs', `${year}-${month}`);
+  const monthDir = join(paiDir, 'history', 'raw-outputs', `${year}-${month}`);
   return join(monthDir, `${year}-${month}-${day}_all-events.jsonl`);
 }
 
