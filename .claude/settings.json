@@ -1,10 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "sonnet",
   "env": {
     "PAI_DIR": "/home/chris/WahookAI/.claude",
     "DA": "WahookAI",
     "PAI_SIMPLE_COLORS": "0",
-    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "128000"
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "128000",
+    "DISABLE_PROMPT_CACHING": "0",
+    "DISABLE_PROMPT_CACHING_SONNET": "0",
+    "DISABLE_PROMPT_CACHING_OPUS": "0"
   },
   "permissions": {
     "allow": [
@@ -56,11 +60,15 @@
       "Bash(dd if=/dev/zero of=/dev/sda)",
       "Bash(mkfs.ext4 /dev/sda)",
       "Bash( /dev/sda)",
-      "Bash(> /dev/sda)"
+      "Bash(> /dev/sda)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./node_modules/**)",
+      "Read(./vendor/**)"
     ],
     "defaultMode": "delegate"
   },
-  "enableAllProjectMcpServers": true,
+  "enableAllProjectMcpServers": false,
   "enabledMcpjsonServers": [],
   "hooks": {
     "PreToolUse": [
