@@ -17,7 +17,7 @@ Relecture collaborative du roman "Écart de Tolérance" avec Christian Boulet. S
 ```
 Chapitres révisés: 1-16 ✅
 Prochain chapitre: 17
-Fichier principal: CHAPITRES_1-5_DRAFT.md
+Fichier principal: MANUSCRIT_COMPLET.md (renommé de CHAPITRES_1-5_DRAFT.md)
 Bible: BIBLE_ROMAN.md (voir section "ÉTAT DE RÉVISION" à la fin)
 ```
 
@@ -113,5 +113,5 @@ et continue la révision."
 ---
 
 ## Fichiers modifiés cette session
-- `/home/chris/Documents/EcartDeTolerance/CHAPITRES_1-5_DRAFT.md`
+- `/home/chris/Documents/EcartDeTolerance/MANUSCRIT_COMPLET.md` (renommé de CHAPITRES_1-5_DRAFT.md)
 - `/home/chris/Documents/EcartDeTolerance/BIBLE_ROMAN.md`

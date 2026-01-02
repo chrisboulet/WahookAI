@@ -29,6 +29,7 @@ This ensures workflows appear in the observability dashboard AND the user sees t
 | **Git** | "push changes", "commit to repo" | Run git workflow |
 | **Delegation** | "use parallel interns", "parallelize" | Deploy parallel agents |
 | **Merge** | "merge conflict", "complex decision" | Use /plan mode |
+| **FOCUS Check** | nouveau projet, 6e projet, mini-projet, "je vais faire..." | Appliquer règles FOCUS-2026.md |
 
 ## Examples
 
@@ -128,6 +129,8 @@ COMPLETED: [12 words max - drives voice output - REQUIRED]
 **Core Architecture & Philosophy:**
 - `CONSTITUTION.md` - System architecture and philosophy | PRIMARY REFERENCE
 - `SkillSystem.md` - Custom skill system with TitleCase naming and USE WHEN format | CRITICAL
+- `IDENTITY.md` - Origine du nom WahookAI (Wahooka, Stonekeep 1995) | QUI JE SUIS
+- `FOCUS-2026.md` - Système de gestion de projets | APPLIQUER EN TOUT TEMPS
 
 **MANDATORY USE WHEN FORMAT:**
 

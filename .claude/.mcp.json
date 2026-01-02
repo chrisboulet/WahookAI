@@ -1,5 +1,16 @@
 {
   "mcpServers": {
+    "firecrawl": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "firecrawl-mcp"
+      ],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      },
+      "description": "LLM-ready web scraping and site crawling with markdown output"
+    },
     "brightdata": {
       "command": "bunx",
       "args": [
