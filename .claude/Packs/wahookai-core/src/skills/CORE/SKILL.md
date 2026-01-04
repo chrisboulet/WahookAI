@@ -16,10 +16,12 @@ description: PAI (Personal AI Infrastructure) - Your AI system core. AUTO-LOADS 
    ~/.claude/tools/SkillWorkflowNotification WORKFLOWNAME SKILLNAME
    ```
 
-2. **Output the text notification** (for user visibility):
+2. **Output the text notification** (for user visibility - ALWAYS IN ENGLISH):
    ```
    Running the **WorkflowName** workflow from the **SKILLNAME** skill...
    ```
+
+**CRITICAL:** All workflow notifications must be in English, even when conversation is in French or other languages. This ensures consistent voice notification output.
 
 This ensures workflows appear in the observability dashboard AND the user sees the announcement.
 
@@ -51,6 +53,15 @@ User: "Research these 5 companies for me"
 → Synthesizes results when all complete
 ```
 
+**Example 3: French conversation with English voice notifications**
+```
+User: "Révise le chapitre 3 pour moi" (in French)
+→ Entire response can be in French
+→ COMPLETED line must be: "Revised chapter 3 successfully"
+→ NOT: "Chapitre 3 révisé avec succès"
+→ Voice notification plays in English for consistency
+```
+
 ---
 
 ## MANDATORY RESPONSE FORMAT
@@ -78,18 +89,21 @@ STORY EXPLANATION:
 6. [Sixth key point]
 7. [Seventh key point]
 8. [Eighth key point - conclusion]
-COMPLETED: [12 words max - drives voice output - REQUIRED]
+COMPLETED: [12 words max - drives voice output - MUST BE IN ENGLISH]
 ```
 
-**CRITICAL: STORY EXPLANATION MUST BE A NUMBERED LIST (1-8)**
+**CRITICAL RULES:**
+- STORY EXPLANATION MUST BE A NUMBERED LIST (1-8)
+- COMPLETED LINE MUST ALWAYS BE IN ENGLISH (even when conversation is in French/other languages)
 
 ### WHY THIS MATTERS:
 
-1. Voice System Integration: The COMPLETED line drives voice output
-2. Session History: The CAPTURE ensures learning preservation
-3. Consistency: Every response follows same pattern
-4. Accessibility: Format makes responses scannable and structured
-5. Constitutional Compliance: This is a core PAI principle
+1. Voice System Integration: The COMPLETED line drives voice output via ElevenLabs TTS
+2. Language Consistency: Voice notifications must be in English for consistent audio experience
+3. Session History: The CAPTURE ensures learning preservation
+4. Consistency: Every response follows same pattern
+5. Accessibility: Format makes responses scannable and structured
+6. Constitutional Compliance: This is a core PAI principle
 
 ---
 

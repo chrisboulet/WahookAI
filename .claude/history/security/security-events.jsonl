@@ -1,0 +1,1 @@
+{"timestamp":"2026-01-04T13:59:14.086Z","type":"confirmation_required","category":"dangerous_git","pattern":"\\bgit\\s+push\\s+.*(-f\\b|--force)","command":"cd /home/chris/WahookAI && git push --force --all origin","session_id":"b8c9b117-3778-4554-bfdf-89a0d4b1bfdb"}
