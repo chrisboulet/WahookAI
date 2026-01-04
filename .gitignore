@@ -82,3 +82,9 @@ credentials/
 .claude/History/raw-outputs/
 .claude/projects/
 .claude/todos/
+
+# Security: Prevent JSONL logs with potential secrets (added 2026-01-04)
+**/raw-outputs/*.jsonl
+**/*all-events.jsonl
+**/*tool-outputs.jsonl
+**/backups/**/raw-outputs/
