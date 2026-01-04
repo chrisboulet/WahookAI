@@ -138,9 +138,9 @@ Each review follows this structure:
 
 ## Project Context: Écart de Tolérance
 
-**Bible:** `/home/chris/Documents/EcartDeTolerance/BIBLE_ROMAN.md`
+**Bible:** `/home/chris/Documents/EcartDeTolerance/BIBLE_MASTER.md` (index 4 documents)
 **Manuscrit:** `/home/chris/Documents/EcartDeTolerance/MANUSCRIT_COMPLET.md`
-**Style Guide:** `/home/chris/Documents/EcartDeTolerance/expansion/STYLE_GUIDE.md`
+**Style Guide:** `/home/chris/Documents/EcartDeTolerance/STYLE_GUIDE.md`
 
 Key technical elements to validate:
 - Mars: 0.38g, -60°C average, 95% CO2 atmosphere

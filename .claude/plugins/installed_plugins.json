@@ -1,4 +1,197 @@
 {
   "version": 2,
-  "plugins": {}
+  "plugins": {
+    "agent-sdk-dev@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/agent-sdk-dev/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:35.431Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "b8da762ea7159d28b13d17ccbd397908940eb229",
+        "isLocal": true
+      }
+    ],
+    "autogpt-agents@ai-research-skills": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/ai-research-skills/autogpt-agents/aee9a90299f4",
+        "version": "aee9a90299f4",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "aee9a90299f4f7f0bcc08ea92f687cd5c9e28e9c",
+        "isLocal": true
+      }
+    ],
+    "document-skills@anthropic-agent-skills": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/anthropic-agent-skills/document-skills/69c0b1a06741",
+        "version": "69c0b1a06741",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "69c0b1a0674149f27b61b2635f935524b6add202",
+        "isLocal": true
+      }
+    ],
+    "example-skills@anthropic-agent-skills": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/anthropic-agent-skills/example-skills/69c0b1a06741",
+        "version": "69c0b1a06741",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "69c0b1a0674149f27b61b2635f935524b6add202",
+        "isLocal": true
+      }
+    ],
+    "claude-opus-4-5-migration@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/claude-opus-4-5-migration/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "code-review@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/code-review/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "commit-commands@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/commit-commands/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "explanatory-output-style@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/explanatory-output-style/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "feature-dev@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/feature-dev/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "frontend-design@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/frontend-design/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "learning-output-style@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/learning-output-style/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "plugin-dev@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/plugin-dev/0.1.0",
+        "version": "0.1.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "pr-review-toolkit@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/pr-review-toolkit/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "ralph-wiggum@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/ralph-wiggum/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "security-guidance@claude-code-plugins": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/claude-code-plugins/security-guidance/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "d213a74fc8e3b6efded52729196e0c2d4c3abb3e",
+        "isLocal": true
+      }
+    ],
+    "microsoft-docs@microsoft-docs-marketplace": [
+      {
+        "scope": "project",
+        "projectPath": "/home/chris/WahookAI",
+        "installPath": "/home/chris/.claude/plugins/cache/microsoft-docs-marketplace/microsoft-docs/0.1.0",
+        "version": "0.1.0",
+        "installedAt": "2026-01-04T00:35:47.104Z",
+        "lastUpdated": "2026-01-04T03:51:11.129Z",
+        "gitCommitSha": "a411af074c9ddbd0df6ffdbe2fde7f2d7a14e96c",
+        "isLocal": true
+      }
+    ]
+  }
 }

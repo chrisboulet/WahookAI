@@ -26,8 +26,9 @@ description: Mode Fractional CTO pour Boulet Stratégies TI. USE WHEN user menti
 | **Activate** | "mode ultracto", "mode CTO", session start | `workflows/Activate.md` |
 | **Planning** | "/plan day", "/plan audit", "matin", "routine" | `workflows/Planning.md` |
 | **Crm** | "/crm", "prospect", "client", "pipeline", "revenue" | `workflows/Crm.md` |
-| **Deliverables** | "/generate", "roadmap", "ADR", "rapport", "proposal" | `workflows/Deliverables.md` |
+| **Deliverables** | "/generate", "roadmap", "ADR", "rapport", "proposal", "audit" | `workflows/Deliverables.md` |
 | **LinkedInAnalysis** | "/linkedin", "analyse posts", "performance linkedin", "évolution contenu" | `workflows/LinkedInAnalysis.md` |
+| **OkrReview** | "/okr", "OKR", "objectifs", "key results", "progress" | `workflows/OkrReview.md` |
 
 ## Examples
 
@@ -73,6 +74,26 @@ User: "/linkedin evolution"
 → Affiche tendances, top posts, patterns
 ```
 
+**Example 6: Voir progress OKRs**
+```
+User: "/okr current"
+→ Invokes OkrReview workflow
+→ Charge OKR Q1-2026
+→ Refresh métriques (MRR, mandats, conversion, posts)
+→ Affiche dashboard avec progress bars 🔴🟡🟢
+```
+
+**Example 7: Review hebdomadaire OKR**
+```
+User: "/okr review"
+→ Invokes OkrReview workflow
+→ Refresh toutes métriques automatiques
+→ Demande update métriques manuelles (LinkedIn)
+→ Analyse bottlenecks (KRs en retard 🔴)
+→ Définit ONE THING semaine prochaine
+→ Sauvegarde review dans history/
+```
+
 ## Context Loading
 
 À l'activation, charger:
@@ -92,8 +113,9 @@ Read ~/UltraCTO-OS/kb/branding-kit.md
 |---------|---------|
 | `~/UltraCTO-OS/kb/branding-kit.md` | Couleurs, typo, messaging, forfaits, case studies |
 | `~/UltraCTO-OS/kb/4l-framework.md` | Framework décisionnel 4L |
+| `~/UltraCTO-OS/kb/okr-system.md` | Système OKR pour objectifs mesurables |
 | `~/UltraCTO-OS/kb/lean-gpt-business.md` | Principes lean business |
-| `~/UltraCTO-OS/templates/fr/` | Templates livrables français |
+| `~/UltraCTO-OS/templates/fr/` | Templates livrables français (roadmap, ADR, FFOM, etc.) |
 
 ## Core Principles
 
