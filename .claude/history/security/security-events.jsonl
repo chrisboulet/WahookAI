@@ -1,1 +1,1 @@
-{"timestamp":"2026-01-04T21:11:22.316Z","type":"attack_blocked","category":"catastrophic_deletion","pattern":"\\s+~\\/?(\\s*$|\\s+)","command":"find ~ -name \"*.aax\" -o -name \"*.aaxc\" 2>/dev/null | head -5","session_id":"632ed558-6164-46e4-870a-bc6c2e831bec"}
+{"timestamp":"2026-01-05T15:07:54.193Z","type":"attack_blocked","category":"catastrophic_deletion","pattern":"\\brm\\s+(-[rfivd]+\\s+)*\\S+\\s+~\\/?","command":"rm -f ~/install-synergy1.sh && echo \"✅ Cleanup terminé!\" && echo \"\" && echo \"Système propre:\"","session_id":"cce566cd-ebd1-4ba1-8554-37a5de5eff84"}
