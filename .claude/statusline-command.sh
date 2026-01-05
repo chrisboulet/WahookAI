@@ -56,14 +56,34 @@ if [ -d "$claude_dir/commands" ]; then
     commands_count=$(ls -1 "$claude_dir/commands/"*.md 2>/dev/null | wc -l | tr -d ' ')
 fi
 
-# Count MCPs from settings.json (single parse)
+# Count MCPs from both settings.json and .mcp.json
 mcp_names_raw=""
-if [ -f "$claude_dir/settings.json" ]; then
-    mcp_data=$(jq -r '.mcpServers | keys | join(" "), length' "$claude_dir/settings.json" 2>/dev/null)
-    mcp_names_raw=$(echo "$mcp_data" | head -1)
-    mcps_count=$(echo "$mcp_data" | tail -1)
-else
-    mcps_count="0"
+mcps_count=0
+
+# Check project-level .mcp.json first (this is the primary location)
+if [ -f "$claude_dir/.mcp.json" ]; then
+    mcp_data=$(jq -r '.mcpServers // {} | keys | join(" "), length' "$claude_dir/.mcp.json" 2>/dev/null)
+    if [ -n "$mcp_data" ]; then
+        mcp_names_raw=$(echo "$mcp_data" | head -1)
+        mcps_count=$(echo "$mcp_data" | tail -1)
+    fi
+fi
+
+# If no project MCPs, check settings.json
+if [ "$mcps_count" -eq 0 ] && [ -f "$claude_dir/settings.json" ]; then
+    # Try new format first (enabledMcpjsonServers)
+    mcp_data=$(jq -r '.enabledMcpjsonServers // [] | length' "$claude_dir/settings.json" 2>/dev/null)
+    if [ "$mcp_data" -gt 0 ]; then
+        mcp_names_raw=$(jq -r '.enabledMcpjsonServers // [] | join(" ")' "$claude_dir/settings.json" 2>/dev/null)
+        mcps_count=$mcp_data
+    else
+        # Fall back to old format (mcpServers)
+        mcp_data=$(jq -r '.mcpServers // {} | keys | join(" "), length' "$claude_dir/settings.json" 2>/dev/null)
+        if [ -n "$mcp_data" ]; then
+            mcp_names_raw=$(echo "$mcp_data" | head -1)
+            mcps_count=$(echo "$mcp_data" | tail -1)
+        fi
+    fi
 fi
 
 # Count Services (optimized - count .md files directly)
@@ -89,72 +109,75 @@ if [ -f "$CACHE_FILE" ]; then
     source "$CACHE_FILE"
 fi
 
-# If cache is stale, missing, or we have no data, update it SYNCHRONOUSLY with timeout
-cache_needs_update=false
-if [ ! -f "$CACHE_FILE" ] || [ -z "$daily_tokens" ]; then
-    cache_needs_update=true
-elif [ -f "$CACHE_FILE" ]; then
-    cache_age=$(($(date +%s) - $(stat -c%Y "$CACHE_FILE" 2>/dev/null || stat -f%m "$CACHE_FILE" 2>/dev/null || echo 0)))
-    if [ $cache_age -ge $CACHE_AGE ]; then
-        cache_needs_update=true
-    fi
-fi
-
-if [ "$cache_needs_update" = true ]; then
-    # Try to acquire lock (non-blocking)
-    if mkdir "$LOCK_FILE" 2>/dev/null; then
-        # We got the lock - update cache with timeout
-        if command -v bunx >/dev/null 2>&1; then
-            # Run ccusage with a timeout (5 seconds for faster updates)
-            # Check if gtimeout is available (macOS), otherwise try timeout (Linux)
-            if command -v gtimeout >/dev/null 2>&1; then
-                ccusage_output=$(gtimeout 5 bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
-            elif command -v timeout >/dev/null 2>&1; then
-                ccusage_output=$(timeout 5 bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
-            else
-                # Fallback without timeout (but faster than before)
-                ccusage_output=$(bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
-            fi
-
-            if [ -n "$ccusage_output" ]; then
-                # Extract input/output tokens, removing commas and ellipsis
-                daily_input=$(echo "$ccusage_output" | awk -F'│' '{print $4}' | sed 's/[^0-9]//g' | head -c 10)
-                daily_output=$(echo "$ccusage_output" | awk -F'│' '{print $5}' | sed 's/[^0-9]//g' | head -c 10)
-                # Extract cost, keep the dollar sign
-                daily_cost=$(echo "$ccusage_output" | awk -F'│' '{print $9}' | sed 's/^ *//;s/ *$//')
-
-                if [ -n "$daily_input" ] && [ -n "$daily_output" ]; then
-                    daily_total=$((daily_input + daily_output))
-                    daily_tokens=$(printf "%'d" "$daily_total" 2>/dev/null || echo "$daily_total")
-
-                    # Write to cache file (properly escape dollar sign)
-                    echo "daily_tokens=\"$daily_tokens\"" > "$CACHE_FILE"
-                    # Use printf to properly escape the dollar sign in the cost
-                    printf "daily_cost=\"%s\"\n" "${daily_cost//$/\\$}" >> "$CACHE_FILE"
-                    # Add timestamp for debugging
-                    echo "cache_updated=\"$(date)\"" >> "$CACHE_FILE"
-                fi
-            fi
-        fi
-
-        # Always remove lock when done
-        rmdir "$LOCK_FILE" 2>/dev/null
-    else
-        # Someone else is updating - check if lock is stale (older than 30 seconds)
-        if [ -d "$LOCK_FILE" ]; then
-            lock_age=$(($(date +%s) - $(stat -c%Y "$LOCK_FILE" 2>/dev/null || stat -f%m "$LOCK_FILE" 2>/dev/null || echo 0)))
-            if [ $lock_age -gt 30 ]; then
-                # Stale lock - remove it and try again
-                rmdir "$LOCK_FILE" 2>/dev/null
-            fi
-        fi
-
-        # Just use cached data if available
-        if [ -f "$CACHE_FILE" ]; then
-            source "$CACHE_FILE"
-        fi
-    fi
-fi
+# ccusage disabled due to performance issues with large history (775MB+ of JSONL data)
+# Re-enable by uncommenting this section after archiving old raw-outputs or optimizing history size
+#
+# # If cache is stale, missing, or we have no data, update it SYNCHRONOUSLY with timeout
+# cache_needs_update=false
+# if [ ! -f "$CACHE_FILE" ] || [ -z "$daily_tokens" ]; then
+#     cache_needs_update=true
+# elif [ -f "$CACHE_FILE" ]; then
+#     cache_age=$(($(date +%s) - $(stat -c%Y "$CACHE_FILE" 2>/dev/null || stat -f%m "$CACHE_FILE" 2>/dev/null || echo 0)))
+#     if [ $cache_age -ge $CACHE_AGE ]; then
+#         cache_needs_update=true
+#     fi
+# fi
+#
+# if [ "$cache_needs_update" = true ]; then
+#     # Try to acquire lock (non-blocking)
+#     if mkdir "$LOCK_FILE" 2>/dev/null; then
+#         # We got the lock - update cache with timeout
+#         if command -v bunx >/dev/null 2>&1; then
+#             # Run ccusage with a timeout (5 seconds for faster updates)
+#             # Check if gtimeout is available (macOS), otherwise try timeout (Linux)
+#             if command -v gtimeout >/dev/null 2>&1; then
+#                 ccusage_output=$(gtimeout 5 bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
+#             elif command -v timeout >/dev/null 2>&1; then
+#                 ccusage_output=$(timeout 5 bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
+#             else
+#                 # Fallback without timeout (but faster than before)
+#                 ccusage_output=$(bunx ccusage 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g' | grep "│ Total" | head -1)
+#             fi
+#
+#             if [ -n "$ccusage_output" ]; then
+#                 # Extract total tokens directly from column 8 (Total Tokens column)
+#                 # This avoids issues with truncated input/output numbers that have ellipsis
+#                 daily_total=$(echo "$ccusage_output" | awk -F'│' '{print $8}' | sed 's/[^0-9]//g')
+#                 # Extract cost from column 9, keep the dollar sign
+#                 daily_cost=$(echo "$ccusage_output" | awk -F'│' '{print $9}' | sed 's/^ *//;s/ *$//')
+#
+#                 if [ -n "$daily_total" ] && [ -n "$daily_cost" ]; then
+#                     # Format with thousands separator
+#                     daily_tokens=$(printf "%'d" "$daily_total" 2>/dev/null || echo "$daily_total")
+#
+#                     # Write to cache file (properly escape dollar sign)
+#                     echo "daily_tokens=\"$daily_tokens\"" > "$CACHE_FILE"
+#                     # Use printf to properly escape the dollar sign in the cost
+#                     printf "daily_cost=\"%s\"\n" "${daily_cost//$/\\$}" >> "$CACHE_FILE"
+#                     # Add timestamp for debugging
+#                     echo "cache_updated=\"$(date)\"" >> "$CACHE_FILE"
+#                 fi
+#             fi
+#         fi
+#
+#         # Always remove lock when done
+#         rmdir "$LOCK_FILE" 2>/dev/null
+#     else
+#         # Someone else is updating - check if lock is stale (older than 30 seconds)
+#         if [ -d "$LOCK_FILE" ]; then
+#             lock_age=$(($(date +%s) - $(stat -c%Y "$LOCK_FILE" 2>/dev/null || stat -f%m "$LOCK_FILE" 2>/dev/null || echo 0)))
+#             if [ $lock_age -gt 30 ]; then
+#                 # Stale lock - remove it and try again
+#                 rmdir "$LOCK_FILE" 2>/dev/null
+#             fi
+#         fi
+#
+#         # Just use cached data if available
+#         if [ -f "$CACHE_FILE" ]; then
+#             source "$CACHE_FILE"
+#         fi
+#     fi
+# fi
 
 # Tokyo Night Storm Color Scheme
 BACKGROUND='\033[48;2;36;40;59m'
@@ -261,18 +284,9 @@ for mcp in $mcp_names_raw; do
     fi
 done
 
-# Output the full 3-line statusline
+# Output the 2-line statusline (ccusage disabled - see lines 92-160 to re-enable)
 # LINE 1 - Greeting with CC version
 printf "👋 ${DA_DISPLAY_COLOR}\"${DA_NAME} here, ready to go...\"${RESET} ${MODEL_PURPLE}Running CC ${cc_version}${RESET}${LINE1_PRIMARY} with ${MODEL_PURPLE}🧠 ${model_name}${RESET}${LINE1_PRIMARY} in ${DIR_COLOR}📁 ${dir_name}${RESET}\n"
 
 # LINE 2 - BLUE theme with MCP names
 printf "${LINE2_PRIMARY}🔌 MCPs${RESET}${LINE2_PRIMARY}${SEPARATOR_COLOR}: ${RESET}${mcp_names_formatted}${RESET}\n"
-
-# LINE 3 - GREEN theme with tokens and cost (show cached or N/A)
-# If we have cached data but it's empty, still show N/A
-tokens_display="${daily_tokens:-N/A}"
-cost_display="${daily_cost:-N/A}"
-if [ -z "$daily_tokens" ]; then tokens_display="N/A"; fi
-if [ -z "$daily_cost" ]; then cost_display="N/A"; fi
-
-printf "${LINE3_PRIMARY}💎 Total Tokens${RESET}${LINE3_PRIMARY}${SEPARATOR_COLOR}: ${RESET}${LINE3_ACCENT}${tokens_display}${RESET}${LINE3_PRIMARY}  Total Cost${RESET}${LINE3_PRIMARY}${SEPARATOR_COLOR}: ${RESET}${COST_COLOR}${cost_display}${RESET}\n"
