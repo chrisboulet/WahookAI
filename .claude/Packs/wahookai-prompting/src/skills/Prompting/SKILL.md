@@ -1,92 +1,95 @@
 ---
-name: prompting
-description: Prompt engineering standards and context engineering principles for AI agents based on Anthropic best practices. Covers clarity, structure, progressive discovery, and optimization for signal-to-noise ratio.
+name: Prompting
+description: Meta-prompting system for dynamic prompt generation using templates, standards, and patterns. USE WHEN meta-prompting, template generation, prompt optimization, or programmatic prompt composition.
 ---
 
-# Prompting Skill
+# Prompting - Meta-Prompting & Template System
 
-## When to Activate This Skill
-- Prompt engineering questions
-- Context engineering guidance
-- AI agent design
-- Prompt structure help
-- Best practices for LLM prompts
-- Agent configuration
+**Invoke when:** meta-prompting, template generation, prompt optimization, programmatic prompt composition, creating dynamic agents, generating structured prompts from data.
 
-## Core Philosophy
-**Context engineering** = Curating optimal set of tokens during LLM inference
+## Overview
 
-**Primary Goal:** Find smallest possible set of high-signal tokens that maximize desired outcomes
+The Prompting skill owns ALL prompt engineering concerns:
+- **Standards** - Anthropic best practices, Claude 4.x patterns, empirical research
+- **Templates** - Handlebars-based system for programmatic prompt generation
+- **Tools** - Template rendering, validation, and composition utilities
+- **Patterns** - Reusable prompt primitives and structures
 
-## Key Principles
+## Workflow Routing
 
-### 1. Context is Finite Resource
-- LLMs have limited "attention budget"
-- Performance degrades as context grows
-- Every token depletes capacity
-- Treat context as precious
+| Workflow | Trigger | File |
+|----------|---------|------|
+| **RenderTemplate** | "render template", "generate from template" | CLI tool |
+| **ValidateTemplate** | "validate template", "check template syntax" | CLI tool |
+| **ApplyStandards** | "review prompt", "optimize prompt" | Reference Standards.md |
 
-### 2. Optimize Signal-to-Noise
-- Clear, direct language over verbose explanations
-- Remove redundant information
-- Focus on high-value tokens
+## Core Components
 
-### 3. Progressive Discovery
-- Use lightweight identifiers vs full data dumps
-- Load detailed info dynamically when needed
-- Just-in-time information loading
+### 1. Standards.md
+Complete prompt engineering documentation based on:
+- Anthropic's Claude 4.x Best Practices (November 2025)
+- Context engineering principles
+- 1,500+ academic papers on prompt optimization
 
-## Markdown Structure Standards
+### 2. Templates/
+Five core primitives for programmatic prompt generation:
 
-Use clear semantic sections:
-- **Background Information**: Minimal essential context
-- **Instructions**: Imperative voice, specific, actionable
-- **Examples**: Show don't tell, concise, representative
-- **Constraints**: Boundaries, limitations, success criteria
+| Primitive | Purpose |
+|-----------|---------|
+| **ROSTER** | Agent/skill definitions from data |
+| **VOICE** | Personality calibration settings |
+| **STRUCTURE** | Multi-step workflow patterns |
+| **BRIEFING** | Agent context handoff |
+| **GATE** | Validation checklists |
 
-## Writing Style
+### 3. Tools/
 
-### Clarity Over Completeness
-✅ Good: "Validate input before processing"
-❌ Bad: "You should always make sure to validate..."
+**RenderTemplate.ts** - Core rendering engine
+```bash
+bun run $PAI_DIR/skills/Prompting/Tools/RenderTemplate.ts \
+  --template Primitives/Briefing.hbs \
+  --data path/to/data.yaml \
+  --output path/to/output.md
+```
 
-### Be Direct
-✅ Good: "Use calculate_tax tool with amount and jurisdiction"
-❌ Bad: "You might want to consider using..."
+**ValidateTemplate.ts** - Template syntax checker
+```bash
+bun run $PAI_DIR/skills/Prompting/Tools/ValidateTemplate.ts \
+  --template Primitives/Briefing.hbs
+```
 
-### Use Structured Lists
-✅ Good: Bulleted constraints
-❌ Bad: Paragraph of requirements
+## Examples
 
-## Context Management
+**Example 1: Generate agent roster**
+```
+User: "Generate a roster from my agents.yaml"
+-> Uses RenderTemplate with Roster.hbs
+-> Outputs formatted agent definitions
+```
 
-### Just-in-Time Loading
-Don't load full data dumps - use references and load when needed
+**Example 2: Create briefing for research agent**
+```
+User: "Brief the research agent on this task"
+-> Uses RenderTemplate with Briefing.hbs
+-> Generates complete agent context handoff
+```
 
-### Structured Note-Taking
-Persist important info outside context window
+**Example 3: Validate template syntax**
+```
+User: "Check my new template for errors"
+-> Uses ValidateTemplate
+-> Reports syntax issues, missing variables
+```
 
-### Sub-Agent Architecture
-Delegate subtasks to specialized agents with minimal context
+## Best Practices
 
-## Best Practices Checklist
-- [ ] Uses Markdown headers for organization
-- [ ] Clear, direct, minimal language
-- [ ] No redundant information
-- [ ] Actionable instructions
-- [ ] Concrete examples
-- [ ] Clear constraints
-- [ ] Just-in-time loading when appropriate
+1. **Separation of Concerns** - Templates for structure, YAML for content
+2. **Keep Templates Simple** - Business logic in TypeScript, not templates
+3. **DRY Principle** - Extract repeated patterns into partials
+4. **Validate Before Rendering** - Check all required variables exist
 
-## Anti-Patterns
-❌ Verbose explanations
-❌ Historical context dumping
-❌ Overlapping tool definitions
-❌ Premature information loading
-❌ Vague instructions ("might", "could", "should")
+## References
 
-## Supplementary Resources
-For full standards: `read ${PAI_DIR}/skills/prompting/CLAUDE.md`
-
-## Based On
-Anthropic's "Effective Context Engineering for AI Agents"
+- `Standards.md` - Complete prompt engineering guide
+- `Templates/README.md` - Template system overview
+- `Tools/RenderTemplate.ts` - Implementation details
